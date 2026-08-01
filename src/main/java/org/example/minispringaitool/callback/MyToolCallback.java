@@ -1,4 +1,8 @@
 package org.example.minispringaitool.callback;
 
-public class MyToolCallback {
+public interface MyToolCallback {
+
+    Object call(String input);
+
+
 }

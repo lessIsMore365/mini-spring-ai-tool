@@ -3,6 +3,8 @@ package org.example.minispringaitool.definition;
 public class MyToolCall {
 
 
+    public MyToolCall(){}
+
     //生成构造
     public MyToolCall(String toolName, String arguments) {
         this.toolName = toolName;
