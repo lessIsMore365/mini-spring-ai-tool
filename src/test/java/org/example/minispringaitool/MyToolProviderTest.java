@@ -2,9 +2,11 @@ package org.example.minispringaitool;
 
 import org.example.minispringaitool.callback.MyToolCallback;
 import org.example.minispringaitool.definition.MyToolCall;
+import org.example.minispringaitool.definition.MyToolDefinition;
 import org.example.minispringaitool.invoker.MyMethodInvoker;
 import org.example.minispringaitool.manager.MyToolManager;
 import org.example.minispringaitool.provider.MyToolProvider;
+import org.example.minispringaitool.registry.MyToolRegistration;
 import org.example.minispringaitool.registry.MyToolRegistry;
 import org.example.minispringaitool.service.WeatherService;
 
@@ -29,28 +31,50 @@ public class MyToolProviderTest {
 
         // Framework初始化阶段
 
-        provider.register(
-                service,
-                registry
+
+        MyToolRegistration registration =
+                provider.register(service);
+
+        /*
+         * 给LLM看的
+         */
+
+        MyToolDefinition definition =
+                registration.getDefinition();
+
+
+        System.out.println(
+                "发送给LLM:"
         );
 
-        MyToolCall toolCall =
-                new MyToolCall();
 
-        toolCall.setToolName("weather");
+        System.out.println(definition);
 
-        toolCall.setArguments(
+
+
+        /*
+         * 给JVM执行的
+         */
+
+        MyToolCallback callback =
+                registration.getCallback();
+
+
+
+        String json =
                 """
                 {
-                    "city":"北京"
+                  "city":"北京"
                 }
-                """);
+                """;
 
-        MyToolManager myToolManager = new MyToolManager(registry);
 
         Object result =
-                myToolManager.execute(toolCall);
-        System.out.println( result);
+                callback.call(json);
+
+
+
+        System.out.println(result);
 
 
 

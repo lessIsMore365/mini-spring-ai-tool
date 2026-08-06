@@ -10,7 +10,18 @@ public class MyToolRegistry {
 
     private final Map<String, MyToolCallback> callbacks = new HashMap<>();
 
-    public void register(String name, MyToolCallback callback) {
+    public void register(MyToolCallback callback) {
+
+        String name =
+                callback.getDefinition().getName();
+
+        if(callbacks.containsKey(name)){
+
+            throw new IllegalArgumentException(
+                    "Tool already exists : " + name);
+
+        }
+
         callbacks.put(name, callback);
     }
 
