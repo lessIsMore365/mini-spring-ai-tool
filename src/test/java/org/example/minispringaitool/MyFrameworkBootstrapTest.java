@@ -1,6 +1,7 @@
 package org.example.minispringaitool;
 
 import org.example.minispringaitool.bootstrap.MyFrameworkBootstrap;
+import org.example.minispringaitool.factory.MyBeanFactory;
 import org.example.minispringaitool.icontext.MyApplicationContext;
 import org.example.minispringaitool.provider.MethodToolCallbackProvider;
 import org.example.minispringaitool.provider.MyToolCallbackProvider;
@@ -15,8 +16,8 @@ public class MyFrameworkBootstrapTest {
 
     static void main() {
         MyApplicationContext context = new MyApplicationContext();
-        context.register(new WeatherService());
-        context.register(new OrderService());
+        context.register(WeatherService.class);
+        context.register(OrderService.class);
 
 
 
@@ -24,9 +25,12 @@ public class MyFrameworkBootstrapTest {
         MyToolRegistry registry =
                 new MyToolRegistry();
 
+
+        MyBeanFactory myBeanFactory = new MyBeanFactory();
+
         List<MyToolCallbackProvider> providers =
                 List.of(
-                        new MethodToolCallbackProvider()
+                        new MethodToolCallbackProvider(myBeanFactory)
                 );
 
         MyFrameworkBootstrap bootstrap =

@@ -5,21 +5,20 @@ import java.util.List;
 
 public class MyApplicationContext {
 
-    private final List<Object> beans =
+    private final List<Class<?>> beanClasses =
             new ArrayList<>();
 
 
-    public void register(Object bean){
+    public void register(Class<?> clazz ){
 
-        beans.add(bean);
+        beanClasses.add(clazz);
 
     }
 
 
-    public List<Object> getBeans(){
+    public List<Class<?>> getBeanClasses(){
 
-        return beans;
-
+        return beanClasses;
     }
 
 }
